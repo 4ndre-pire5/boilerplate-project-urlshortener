@@ -74,20 +74,20 @@ app.post("/api/shorturl", (req, res) => {
 
 });
 
-// --- ROTA 2: GET /api/shorturl/:shortcode (REDIRECIONAMENTO) ---
+//GET /api/shorturl/:shortcode
 app.get("/api/shorturl/:shortcode", (req, res) => {
   // 1. Obtém o shortcode da URL
   const shortcode = req.params.shortcode;
   const shortcodeNumber = parseInt(shortcode);
 
-  // 2. Verifica se o shortcode é um número válido e existe no banco de dados
+  // Verify if shorcode is valid and if exists in database
   if (isNaN(shortcodeNumber) || !urlDatabase[shortcodeNumber]) {
       return res.status(404).json({ error: 'No short URL found for this code' });
   }
 
-  // 3. Recupera a URL original
+  // Load URL original
   const originalUrl = urlDatabase[shortcodeNumber];
 
-  // 4. Redireciona o usuário para a URL original
+  // Redirect to original URL
   res.redirect(originalUrl);
 });
